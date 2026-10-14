@@ -1,0 +1,401 @@
+/* ==========================================================
+   IFPR Campus Assis Chateaubriand — E-mails dos Professores
+   Índice:
+   1. Cores e temas
+   2. Base
+   3. Acessibilidade
+   4. Botões
+   5. Cabeçalho
+   6. Conteúdo (destaque, abas, busca)
+   7. Cartões de matérias
+   8. Rodapé e utilitários
+   9. Movimento e telas pequenas
+   ========================================================== */
+
+
+/* ---------- 1. CORES E TEMAS ---------- */
+
+/* Tema claro (padrão) */
+:root {
+  --bg: #f3f8ff;
+  --surface: #ffffff;
+  --text: #0f2747;
+  --muted: #52688a;
+  --primary: #1857c4;
+  --primary-text: #ffffff;
+  --accent: #dbe9ff;
+  --border: #c9daf5;
+  --shadow: 0 6px 20px rgba(24, 87, 196, .12);
+
+  --fs: 100%; /* tamanho da fonte (botões A+ / A−) */
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Tema escuro automático (segue o aparelho, a menos que o usuário escolha "claro") */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1424;
+    --surface: #12223b;
+    --text: #e8f0ff;
+    --muted: #a3b6d6;
+    --primary: #6ea8ff;
+    --primary-text: #06172f;
+    --accent: #1b3355;
+    --border: #27426b;
+    --shadow: 0 6px 20px rgba(0, 0, 0, .4);
+  }
+}
+
+/* Tema escuro escolhido pelo botão (mesmas cores do bloco acima) */
+:root[data-theme="dark"] {
+  --bg: #0a1424;
+  --surface: #12223b;
+  --text: #e8f0ff;
+  --muted: #a3b6d6;
+  --primary: #6ea8ff;
+  --primary-text: #06172f;
+  --accent: #1b3355;
+  --border: #27426b;
+  --shadow: 0 6px 20px rgba(0, 0, 0, .4);
+}
+
+/* Alto contraste (precisa ficar depois dos temas para vencer) */
+:root[data-contrast="high"] {
+  --bg: #000;
+  --surface: #000;
+  --text: #fff;
+  --muted: #fff;
+  --primary: #ffe600;
+  --primary-text: #000;
+  --accent: #000;
+  --border: #fff;
+}
+
+
+/* ---------- 2. BASE ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--fs);
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Verdana, system-ui, sans-serif;
+  line-height: 1.55;
+}
+
+main {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 1.2rem 1rem 3rem;
+}
+
+
+/* ---------- 3. ACESSIBILIDADE ---------- */
+
+/* Foco visível para quem usa teclado */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Link "Pular para o conteúdo" (aparece só ao focar com Tab) */
+.skip {
+  position: absolute;
+  top: 0;
+  left: -999px;
+  z-index: 99;
+  padding: .6rem 1rem;
+  background: var(--primary);
+  color: var(--primary-text);
+}
+
+.skip:focus {
+  top: 8px;
+  left: 8px;
+}
+
+
+/* ---------- 4. BOTÕES ---------- */
+
+button,
+.btn {
+  font: inherit;
+  cursor: pointer;
+  padding: .45rem .8rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+button:hover {
+  border-color: var(--primary);
+}
+
+.primary {
+  font-weight: 700;
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-text);
+}
+
+
+/* ---------- 5. CABEÇALHO ---------- */
+
+header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  padding: .8rem 1rem;
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+
+.brand strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.brand span {
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+/* Logo sobre fundo branco (o texto dela é escuro e sumiria no modo escuro) */
+.brand img.logo {
+  flex: none;            /* não deixa a logo ser espremida/cortada */
+  height: 84px;
+  width: auto;
+  object-fit: contain;
+  padding: 6px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+/* Selo "IF" usado quando não há logo */
+.badge {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: var(--primary-text);
+  font-weight: 800;
+}
+
+/* Botões de acessibilidade */
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+
+/* ---------- 6. CONTEÚDO (destaque, abas, busca) ---------- */
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.6rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--primary), #2f86ff);
+  box-shadow: var(--shadow);
+  color: #fff;
+  overflow: hidden;
+}
+
+:root[data-contrast="high"] .hero {
+  background: #000;
+  border: 2px solid #fff;
+}
+
+.hero h1 {
+  margin: 0 0 .3rem;
+  font-size: 1.6rem;
+}
+
+.hero p {
+  margin: 0;
+  opacity: .95;
+}
+
+.hero svg {
+  flex: none;
+  width: 110px;
+  height: auto;
+}
+
+/* Abas: Professores / Técnicos administrativos */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1.2rem;
+}
+
+/* Busca */
+.search {
+  margin: .8rem 0 1.2rem;
+}
+
+.search input {
+  width: 100%;
+  font: inherit;
+  padding: .8rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+
+/* ---------- 7. CARTÕES DE MATÉRIAS ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  padding: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: 0 0 .7rem;
+  font-size: 1.1rem;
+}
+
+.card h2 svg {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  color: var(--primary);
+}
+
+.card ul {
+  display: grid;
+  gap: .45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Botão com o nome do professor */
+.card a {
+  display: block;
+  padding: .6rem .8rem;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card a:hover {
+  border-color: var(--primary);
+}
+
+.card a small {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* E-mails extras (coordenação, setor, etc.) */
+.extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  margin-top: .3rem;
+}
+
+.extra a {
+  display: inline-block;
+  padding: .25rem .6rem;
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+/* Mensagem "Nenhum resultado" */
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+
+/* ---------- 8. RODAPÉ E UTILITÁRIOS ---------- */
+
+footer {
+  padding: 1rem;
+  text-align: center;
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+
+/* ---------- 9. MOVIMENTO E TELAS PEQUENAS ---------- */
+
+/* Animação leve nos cartões (só se o aparelho permitir) */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform .2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Botão "Reduzir movimento" do site */
+.no-motion * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Celular: esconde a ilustração do destaque */
+@media (max-width: 560px) {
+  .hero svg {
+    display: none;
+  }
+}

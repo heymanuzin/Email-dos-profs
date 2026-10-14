@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>E-mails dos Professores • IFPR Assis Chateaubriand</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- Ícones -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M20 17v4H6.5A2.5 2.5 0 0 1 4 18.5"/></symbol>
+</svg>
+
+
+
+<div id="app">
+  <header>
+    <div class="brand">
+      <div class="badge" data-logo aria-hidden="true">IF</div>
+      <div><strong>IFPR</strong><span>Campus Assis Chateaubriand</span></div>
+    </div>
+    <div class="tools" role="toolbar" aria-label="Acessibilidade">
+      <button type="button" data-act="theme" aria-label="Alternar modo claro e escuro">🌓 Tema</button>
+      <button type="button" data-act="smaller" aria-label="Diminuir fonte">A−</button>
+      <button type="button" data-act="bigger" aria-label="Aumentar fonte">A+</button>
+      <button type="button" data-act="contrast" aria-pressed="false">Alto contraste</button>
+      <button type="button" data-act="motion" aria-pressed="false">Reduzir movimento</button>
+    </div>
+  </header>
+  <main id="conteudo">
+    <div class="hero">
+      <div>
+        <h1>E-mails dos Professores</h1>
+        <p>Escolha a matéria e clique no nome do professor para abrir o Gmail já com o destinatário preenchido.</p>
+      </div>
+      <svg viewBox="0 0 120 90" aria-hidden="true"><rect x="8" y="50" width="104" height="14" rx="3" fill="#fff"/><rect x="16" y="34" width="88" height="14" rx="3" fill="#cfe2ff"/><rect x="26" y="18" width="70" height="14" rx="3" fill="#fff"/><rect x="8" y="66" width="104" height="6" rx="3" fill="#a9c9ff"/></svg>
+    </div>
+    <div class="tabs" role="group" aria-label="Tipo de servidor"><button type="button" class="primary" data-tipo="P" aria-pressed="true">Professores</button><button type="button" data-tipo="T" aria-pressed="false">Técnicos administrativos</button></div>
+    <div class="search">
+      <label for="q" class="sr" style="position:absolute;left:-999px">Buscar professor ou matéria</label>
+      <input id="q" type="search" placeholder="🔎 Buscar professor ou matéria…" autocomplete="off">
+    </div>
+    <div class="grid" id="grid" aria-live="polite"></div>
+    <p class="empty" id="empty" hidden>Nenhum resultado encontrado.</p>
+  </main>
+  <footer>IFPR – Campus Assis Chateaubriand</footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
