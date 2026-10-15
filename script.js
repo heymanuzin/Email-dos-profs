@@ -1,6 +1,6 @@
 /* ============ CONFIGURAÇÕES ============ */
 // Logo oficial: coloque aqui o endereço/arquivo da imagem (ex.: "logo-ifpr.png"). Vazio = mostra o selo "IF".
-const LOGO_SRC = "img/AAAAA IFFFF.png";
+const LOGO_SRC = "logo.png";
 
 
 // Dados da planilha "Lista de Servidores" (t: D=docente, S=substituto, T=técnico).
@@ -52,7 +52,14 @@ if (LOGO_SRC) document.querySelectorAll("[data-logo]").forEach(el => {
 });
 
 /* Lista */
-const gmail = email => "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(email);
+// No celular/tablet: abre o app de e-mail do aparelho (mailto:).
+// No computador: abre o Gmail no navegador.
+const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || matchMedia("(pointer: coarse)").matches;
+const gmail = email => isMobile
+  ? "mailto:" + email
+  : "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(email);
+const alvo = isMobile ? "" : ' target="_blank" rel="noopener noreferrer"';
+const dica = isMobile ? "(abre o app de e-mail)" : "(abre o Gmail em nova aba)";
 const esc = s => s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 let tipo = "P";
@@ -68,10 +75,10 @@ function render(term){
       <h2 id="m-${esc(m)}"><svg aria-hidden="true"><use href="#book"/></svg>${esc(m)}</h2>
       <ul>${groups[m].sort((a,b)=>a.nome.localeCompare(b.nome,"pt-BR")).map(p => {
         const info = [p.area && p.area !== m ? p.area : "", p.t === "S" ? "Substituto(a)" : "", p.obs].filter(Boolean).join(" • ");
-        return `<li class="item"><a href="${gmail(p.emails[0])}" target="_blank" rel="noopener noreferrer"
-               aria-label="Enviar e-mail para ${esc(p.nome)} (abre o Gmail em nova aba)">
+        return `<li class="item"><a href="${gmail(p.emails[0])}"${alvo}
+               aria-label="Enviar e-mail para ${esc(p.nome)} ${dica}">
           ${esc(p.nome)}<small>${esc(p.emails[0])}</small>${info ? `<small>${esc(info)}</small>` : ""}</a>
-          ${p.emails.length > 1 ? `<div class="extra">${p.emails.slice(1).map(x => `<a href="${gmail(x)}" target="_blank" rel="noopener noreferrer" aria-label="Enviar e-mail para ${esc(x)} (abre o Gmail em nova aba)">${esc(x.split("@")[0])}</a>`).join("")}</div>` : ""}</li>`; }).join("")}
+          ${p.emails.length > 1 ? `<div class="extra">${p.emails.slice(1).map(x => `<a href="${gmail(x)}"${alvo} aria-label="Enviar e-mail para ${esc(x)} ${dica}">${esc(x.split("@")[0])}</a>`).join("")}</div>` : ""}</li>`; }).join("")}
       </ul>
     </section>`).join("");
   $("#empty").hidden = names.length > 0;
