@@ -1,6 +1,6 @@
 /* ============ CONFIGURAÇÕES ============ */
 // Logo oficial: coloque aqui o endereço/arquivo da imagem (ex.: "logo-ifpr.png"). Vazio = mostra o selo "IF".
-const LOGO_SRC = "logo.png";
+const LOGO_SRC = "img/AAAAA IFFFF.png";
 
 
 // Dados da planilha "Lista de Servidores" (t: D=docente, S=substituto, T=técnico).
